@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+<!--    <title>Title</title>-->
 
-    <div>
-    <!-- 暫存提示 -->
-    <%= flash[:SuccessMeg] %>
-    <%= flash[:ErrorMeg] %>
-    </div>
+
 </head>
 <body>
+
+  <div>
+    <!-- 暫存提示 -->
+    <%= flash[:SuccessMeg] %>
+  </div>
   <!--  鏈接 => 創建候選人-->
-  <!--  <%#= link_to 'Add Candidates', '/candidates/new' %> <!-- <a href=" /candidates/new">Add Candidates</a> -->-->
-  <%= link_to 'Add Candidates',  new_candidate_path %>
+  <!--  <%#= link_to 'Add Candidates', '/candidates/new' %>  <a href=" /candidates/new">Add Candidates</a> -->
+  <h1> <%= link_to 'Add Candidates',  new_candidate_path %></h1>
 
   <!-- 候選人表格 -->
   <table>
@@ -28,9 +29,12 @@
       <tr>
         <td><%= link_to candidate.name, candidate_path(candidate.id) %></td>
 <!--        <td><a href="/candidates/<%#= candidate.id %>>"> <%#= candidate.name %></a></td>-->
-        <td><%= candidate.party %>Party</td>
-        <td><%= candidate.age %>Age</td>
-        <td>Action</td>
+        <td><%= candidate.party %>y</td>
+        <td><%= candidate.age %></td>
+        <!--  更新-->
+        <td>
+          <%= link_to 'Update',  edit_candidate_path(candidate.id) %>
+        </td>
       </tr>
     <% end %>
   </table>
