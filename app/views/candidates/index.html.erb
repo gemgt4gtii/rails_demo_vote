@@ -3,8 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <div>
+    <!-- 暫存提示 -->
+    <%= flash[:SuccessMeg] %>
+    <%= flash[:ErrorMeg] %>
+    </div>
 </head>
 <body>
+  <!--  鏈接 => 創建候選人-->
+  <!--  <%#= link_to 'Add Candidates', '/candidates/new' %> <!-- <a href=" /candidates/new">Add Candidates</a> -->-->
+  <%= link_to 'Add Candidates',  new_candidate_path %>
 
+  <!-- 候選人表格 -->
+  <table>
+    <tr>
+      <td>Name</td>
+      <td>Party</td>
+      <td>Age</td>
+      <td>Action</td>
+    </tr>
+  <!--  以each(遍歷)方式，印出資料-->
+    <% @candidate.each do |candidate|  %>
+      <tr>
+        <td><%= link_to candidate.name, candidate_path(candidate.id) %></td>
+<!--        <td><a href="/candidates/<%#= candidate.id %>>"> <%#= candidate.name %></a></td>-->
+        <td><%= candidate.party %>Party</td>
+        <td><%= candidate.age %>Age</td>
+        <td>Action</td>
+      </tr>
+    <% end %>
+  </table>
 </body>
 </html>
