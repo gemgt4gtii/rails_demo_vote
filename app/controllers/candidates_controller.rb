@@ -1,72 +1,61 @@
-
 class CandidatesController < ApplicationController
-  #主頁
+
+  before_action :find_candidate, :only => [ :show, :edit, :update, :destroy, :vote]
+  # before_action :find_candidate, :except [ :index, :create, :new]
+
   def index
-    # 撈出所有model的資料
     @candidate = Candidate.all
+  end
+
+  def show
   end
 
   def new
     @candidate = Candidate.new
   end
 
-  #創建候選人
   def create
-    @candidate = Candidate.new(candidates_params)
+    @candidate = Candidate.new(candidate_params)
 
     if @candidate.save
-    #  success
-      flash[:SuccessMeg] = "Success"
-      redirect_to '/candidates'
+      redirect_to '/candidates', notice: 'Candidate created!'
     else
-      flash[:ErrorMeg] = "Error"
-      render :new # redirect_to '/candidates/new'
+      render :new
     end
   end
-  #調取候選人資料
-  def show
-    @candidate = Candidate.find_by(params[:id])
 
-  end
-  #編輯資料
   def edit
-    @candidate = Candidate.find_by(params[:id])
   end
 
-  #更新資料
   def update
-    @candidate = Candidate.find_by(params[:id])
-
-    if @candidate.update(candidates_params)
-      #  success
-      flash[:SuccessMeg] = "Success"
-      redirect_to '/candidates'
+    if @candidate.update(candidate_params)
+      redirect_to '/candidates', notice: 'Candidate updated!'
     else
-      flash[:SuccessMeg] = "Error"
-      render :edit # redirect_to '/candidates/edit'
+      render :edit
     end
   end
-  # 刪除資料
+
   def destroy
-    @candidate = Candidate.find_by(params[:id])
     @candidate.destroy
-
-    flash[:SuccessMeg] = "Candidate deleted"
-    redirect_to '/candidates'
+    redirect_to '/candidate', notice: 'Candidate deleted!'
   end
-  #投票功能
+
   def vote
-    @candidate = Candidate.find_by(params[:id])
-    # @candidate.votes = @candidate.votes + 1
-    @candidate.increment(:votes)
-    @candidate.save
+    # VoteLog.create(candidate: @candidate, ip_address: request.remote_ip)
+    @candidate.vote_logs.create(ip_address: request.remote_ip)
 
-    flash[:SuccessMeg] = "Voted!"
-    redirect_to '/candidates'
+    # send mail
+    # VoteMailer.vote_notify('z123456618@hotmail.com').deliver
+
+    redirect_to '/candidates', notice: 'Voted!'
   end
-    private
-    # 清洗數據
-    def candidates_params
-      params.require(:candidate).permit(:name, :party, :age, :politics)
-    end
+
+  private
+  def candidate_params
+    params.require(:candidate).permit(:name, :party, :age, :politics)
+  end
+
+  def find_candidate
+    @candidate = Candidate.find_by(id: params[:id])
+  end
 end

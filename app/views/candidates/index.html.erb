@@ -26,13 +26,13 @@
       <td>Age</td>
       <td>Action</td>
     </tr>
+
   <!--  以each(遍歷)方式，印出資料-->
     <% @candidate.each do |candidate|  %>
       <tr>
         <td><%= link_to 'vote',  vote_candidate_url(candidate.id),method: 'post' %></td>
-        <td><%= candidate.votes %></td>
+        <td><%= candidate.vote_logs_count %></td>
         <td><%= link_to candidate.name, candidate_path(candidate.id) %></td>
-<!--        <td><a href="/candidates/<%#= candidate.id %>>"> <%#= candidate.name %></a></td>-->
         <td><%= candidate.party %>y</td>
         <td><%= candidate.age %></td>
         <!--  更新-->
