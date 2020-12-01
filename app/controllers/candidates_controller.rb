@@ -42,7 +42,7 @@ class CandidatesController < ApplicationController
       flash[:SuccessMeg] = "Success"
       redirect_to '/candidates'
     else
-      flash[:ErrorMeg] = "Error"
+      flash[:SuccessMeg] = "Error"
       render :edit # redirect_to '/candidates/edit'
     end
   end
@@ -54,7 +54,16 @@ class CandidatesController < ApplicationController
     flash[:SuccessMeg] = "Candidate deleted"
     redirect_to '/candidates'
   end
+  #投票功能
+  def vote
+    @candidate = Candidate.find_by(params[:id])
+    # @candidate.votes = @candidate.votes + 1
+    @candidate.increment(:votes)
+    @candidate.save
 
+    flash[:SuccessMeg] = "Voted!"
+    redirect_to '/candidates'
+  end
     private
     # 清洗數據
     def candidates_params
