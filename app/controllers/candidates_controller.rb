@@ -32,6 +32,7 @@ class CandidatesController < ApplicationController
   def edit
     @candidate = Candidate.find_by(params[:id])
   end
+
   #更新資料
   def update
     @candidate = Candidate.find_by(params[:id])
@@ -45,13 +46,18 @@ class CandidatesController < ApplicationController
       render :edit # redirect_to '/candidates/edit'
     end
   end
+  # 刪除資料
+  def destroy
+    @candidate = Candidate.find_by(params[:id])
+    @candidate.destroy
+
+    flash[:SuccessMeg] = "Candidate deleted"
+    redirect_to '/candidates'
+  end
+
     private
     # 清洗數據
     def candidates_params
       params.require(:candidate).permit(:name, :party, :age, :politics)
     end
-
-
-
-
 end
