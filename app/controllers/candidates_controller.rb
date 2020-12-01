@@ -1,6 +1,6 @@
 class CandidatesController < ApplicationController
 
-  before_action :find_candidate, :only => [ :show, :edit, :update, :destroy, :vote]
+  before_action :find_candidate, only:  [ :show, :edit, :update, :destroy, :vote]
   # before_action :find_candidate, :except [ :index, :create, :new]
 
   def index
@@ -16,7 +16,6 @@ class CandidatesController < ApplicationController
 
   def create
     @candidate = Candidate.new(candidate_params)
-
     if @candidate.save
       redirect_to '/candidates', notice: 'Candidate created!'
     else
@@ -37,7 +36,7 @@ class CandidatesController < ApplicationController
 
   def destroy
     @candidate.destroy
-    redirect_to '/candidate', notice: 'Candidate deleted!'
+    redirect_to '/candidates', notice: 'Candidate deleted!'
   end
 
   def vote
