@@ -15,5 +15,5 @@ git commit -m "$comment"
 #echo "git merge origin/master"
 #git merge origin/master
 
-echo "git push origin master:master"
-git push origin master:master
+echo "git push origin main"
+git push origin main
